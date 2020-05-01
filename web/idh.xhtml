@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="display">
+            <h:outputText value="Tipo de representação: " />
+            <p:selectOneButton value="#{selectOneView.tipo}" style="height: 50px" >
+                <f:selectItem itemLabel="area" itemValue="area" />
+                <f:selectItem itemLabel="populacao" itemValue="populacao" />
+                <f:selectItem itemLabel="densidade_demografica" itemValue="densidade_demografica" />
+                <f:selectItem itemLabel="pib" itemValue="pib" />
+                <f:selectItem itemLabel="idh" itemValue="idh" />
+            </p:selectOneButton>
+            <p:commandButton value="Submit" icon="ui-icon-check" action="#{selectOneView.pegarTipo()}" />
+
+            <h:panelGrid>
+                <p:dataTable var="paises" value="#{selectOneView.paises}" style="width:1500px" >
+                    <p:column headerText="País">
+                        <h:outputText value="#{paises.nome}" />
+                    </p:column>
+
+                    <p:column headerText="IDH">
+                        <h:outputText value="#{paises.idh}" />
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+
+            <h:panelGrid columns="3" columnClasses="left,right" style="width:100%">
+
+
+                <p:growl id="growl" showDetail="true" />
+                <p:chart type="bar" model="#{selectOneView.barModel}" style="width:600px;height:300px">
+                    <p:ajax event="itemSelect" listener="#{selectOneView.itemSelect}" update="growl" />
+                </p:chart>  
+
+                <p:chart type="bubble" model="#{selectOneView.bubbleModel2}" style="width:400px;height:300px" />
+
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+
